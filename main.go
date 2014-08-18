@@ -1,10 +1,9 @@
 package main
 
 import (
-	// "fmt"
-	c "light/core"
+	"light/lazy"
 )
 
 func main() {
-
+	lazy.Run()
 }
