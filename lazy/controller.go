@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	controller *Controller
+	controller Controller
 )
 
 type Controller struct {
@@ -24,13 +24,13 @@ func (c *Controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	c.Writer = w
 	c.Request = r
 
-	call(r.URL.Path)
+	c.call(r.URL.Path)
 }
 
 func (c *Controller) AddRouter(router string, f func()) {
 	fmt.Println(c)
 	c.Handler[router] = f
-	fmt.Println(c.Handler)
+	fmt.Println("add", c.Handler)
 }
 
 func NewController() *Controller {
@@ -42,8 +42,8 @@ func NewController() *Controller {
 }
 
 // reflect call func
-func call(name string, params ...interface{}) (result []reflect.Value, err error) {
-	f := controller.Handler
+func (c *Controller) call(name string, params ...interface{}) (result []reflect.Value, err error) {
+	f := c.Handler
 	if _, ok := f[name]; ok {
 		v := reflect.ValueOf(f[name])
 		if v.Type().NumIn() != len(params) {
@@ -58,5 +58,6 @@ func call(name string, params ...interface{}) (result []reflect.Value, err error
 
 		result = v.Call(in)
 	}
+
 	return
 }
