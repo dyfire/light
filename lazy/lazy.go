@@ -5,8 +5,9 @@ import (
 )
 
 // 添加路由
-func AddRouter(path string, f func()) *App {
-	LazyApp.Handlers.AddRouter(path, f)
+func AddRouter(path string, c ControllerInterface, a string) *App {
+	LazyApp.Router.Add(path, c, a)
+
 	return LazyApp
 }
 

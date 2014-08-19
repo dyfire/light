@@ -1,21 +1,13 @@
 package router
 
 import (
-	// "light/controller"
 	"fmt"
+	"light/controller"
 	"light/lazy"
 )
 
 func init() {
 	fmt.Println("start router")
-	lazy.AddRouter("/user", User)
-	lazy.AddRouter("/login", Login)
-}
-
-func User() {
-	fmt.Println("hello user")
-}
-
-func Login() {
-	fmt.Println("login")
+	lazy.AddRouter("/user", &controller.UserController{}, "list")
+	lazy.AddRouter("/post", &controller.PostController{}, "list")
 }

@@ -4,7 +4,9 @@ import (
 	"fmt"
 	// "runtime"
 	// "path/filepath"
-	"strings"
+	"reflect"
+	// "strings"
+	// "strconv"
 )
 
 type User struct {
@@ -21,5 +23,11 @@ func (u *User) Notify() error {
 }
 
 func main() {
-	fmt.Println(strings.Join(":a", "b"))
+	u := &User{}
+
+	v := reflect.ValueOf(u)
+	// k := reflect.TypeOf(u)
+	e := v.Interface()
+	// fmt.Println(string(v.String()))
+	fmt.Println(e)
 }

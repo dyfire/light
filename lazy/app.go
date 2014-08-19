@@ -2,29 +2,30 @@ package lazy
 
 import (
 	"fmt"
-	"net/http"
+	// "net/http"
 	// "path/filepath"
 	// "strconv"
-	"log"
+	// "log"
 )
 
 type App struct {
-	Handlers *Controller
+	Router *Router
 }
 
 func NewApp() *App {
 	fmt.Println("init app")
-	handler := NewController()
+	router := NewRouter()
+	fmt.Println(router)
 	return &App{
-		Handlers: handler,
+		Router: router,
 	}
 }
 
 func (ap *App) Run() {
-	fmt.Println("server start")
-	err := http.ListenAndServe(":"+fmt.Sprintf("%d", HttpPort), ap.Handlers)
+	// fmt.Println("server start")
+	// err := http.ListenAndServe(":"+fmt.Sprintf("%d", HttpPort), ap.Handlers)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 }

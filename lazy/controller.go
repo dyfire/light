@@ -12,12 +12,23 @@ var (
 )
 
 type Controller struct {
-	Handler map[string]func()
+	// Handler map[string]func()
+	Handler map[string]string
 	Writer  http.ResponseWriter
 	Request *http.Request
 }
 
 type ControllerInterface interface {
+	Init()
+	Post()
+}
+
+func (c *Controller) Post() {
+
+}
+
+func (c *Controller) Init(path, method string) {
+	c.Handler[path] = method
 }
 
 func (c *Controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -28,9 +39,9 @@ func (c *Controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Controller) AddRouter(router string, f func()) {
-	fmt.Println(c)
-	c.Handler[router] = f
-	fmt.Println("add", c.Handler)
+	// fmt.Println(c)
+	// c.Handler[router] = f
+	// fmt.Println("add", c.Handler)
 }
 
 func NewController() *Controller {
