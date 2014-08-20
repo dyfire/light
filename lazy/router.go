@@ -25,7 +25,7 @@ func (r *Router) Add(path string, c ControllerInterface, action string) {
 	t := reflect.Indirect(reflectVal).Type()
 
 	controllerName := string(t.Name())
-	c.Init(path, action)
+	c.Init(path)
 	// c.Handler[path] = action
 	r.Control[controllerName] = c
 	// c.Handler

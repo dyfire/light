@@ -2,7 +2,7 @@ package lazy
 
 import (
 	"errors"
-	"fmt"
+	// "fmt"
 	"net/http"
 	"reflect"
 )
@@ -27,8 +27,8 @@ func (c *Controller) Post() {
 
 }
 
-func (c *Controller) Init(path, method string) {
-	c.Handler[path] = method
+func (c *Controller) Init(method string) {
+	c.Handler[method] = method
 }
 
 func (c *Controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -72,3 +72,8 @@ func (c *Controller) call(name string, params ...interface{}) (result []reflect.
 
 	return
 }
+
+// func (c *Controller) callFunc(name string, params ...interface{}) (result []reflect.Value, err error) {
+
+// 	return
+// }
