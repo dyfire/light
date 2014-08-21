@@ -7,6 +7,8 @@ import (
 	"reflect"
 	// "strings"
 	// "strconv"
+	"log"
+	"net/http"
 )
 
 type User struct {
@@ -28,7 +30,12 @@ func (u *User) Writer() {
 }
 
 type D struct {
-	F map[string]func()
+	F map[string]reflect.Value
+}
+
+func (m *D) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("server http")
+
 }
 
 func main() {
@@ -36,17 +43,16 @@ func main() {
 	// t := User{}
 	v := reflect.ValueOf(u)
 
-	e := v.MethodByName("Notify").Call(nil)
-	// l := v.NumMethod()
-
+	e := v.MethodByName("Notify")
 	fmt.Println(e)
 
-	a := reflect.TypeOf(u)
-	e1 := a.Method(0)
-	fmt.Println(e1.Func)
-
-	d := &D{}
-	d.F["f"] = e1.Func.Call(nil)
+	d := D{
+		F: make(map[string]reflect.Value),
+	}
+	d.F["a"] = e
 	fmt.Println(d)
-
+	err := http.ListenAndServe(":9090", &d) //设置监听的端口
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
 }
